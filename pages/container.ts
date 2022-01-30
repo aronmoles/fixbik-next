@@ -1,14 +1,14 @@
+import getConfig from 'next/config';
 import AuthRepository from '../contexts/auth/domain/AuthRepository';
 import ApiAuthRepository from '../contexts/auth/infrastructure/api/ApiAuthRepository';
 import FixBikHttpClient from '../contexts/shared/infrastructure/http-client/FixBikHttpClient';
 import AuthStore from '../contexts/auth/domain/AuthStore';
 import AuthCookieStore from '../contexts/auth/infrastructure/store/AuthCookieStore';
 
-// const env: Env = window as any;
+const { publicRuntimeConfig } = getConfig()
 
 const httpClient = new FixBikHttpClient({
-    baseUrl: "http://localhost:3001",
-    // baseUrl: env.API_PATH,
+    baseUrl: publicRuntimeConfig.apiBaseUrl,
 });
 
 export const authStore: AuthStore = new AuthCookieStore();

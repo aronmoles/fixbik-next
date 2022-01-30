@@ -9,7 +9,7 @@ const Home: NextApplicationPage = () => {
     return (
         <>
             <h1>FixBik</h1>
-            <p>User { isAuth ? 'logged' : 'not logged' }</p>
+            <p className="a">User {isAuth ? 'logged' : 'not logged'}</p>
             <Link href={Route.AUTHENTICATE}>Login</Link>
             <a href={'#'} onClick={() => logout()}>Logout</a>
         </>

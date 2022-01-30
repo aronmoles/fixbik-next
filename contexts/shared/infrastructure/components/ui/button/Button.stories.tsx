@@ -14,6 +14,6 @@ export const Normal = Template.bind({});
 Normal.args = {
     type: 'button',
     children: 'This is a button',
-    onClick: action('onClick')
+    onClick: action('onClick'),
 };
 

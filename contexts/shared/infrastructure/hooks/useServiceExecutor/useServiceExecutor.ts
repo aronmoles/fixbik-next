@@ -17,7 +17,7 @@ export default function useServiceExecutor<D>(service: Service<D>): ServiceExecu
         setLoading(false)
         service.run(...args)
             .then(setData)
-            .catch((error) => setError(error.message))
+            .catch((exception) => setError(exception.message))
             .finally(() => setLoading(false))
     }
 

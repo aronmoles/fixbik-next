@@ -132,7 +132,7 @@
     "no-undefined": "off",
     "no-underscore-dangle": ["error", { "allowAfterThis": true }],
     "no-unneeded-ternary": "error",
-    "no-unused-expressions": "error",
+    "no-unused-expressions": "off",
     "no-unused-labels": "error",
     "no-useless-call": "error",
     "no-useless-catch": "error",

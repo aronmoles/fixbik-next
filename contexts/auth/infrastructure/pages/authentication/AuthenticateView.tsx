@@ -15,18 +15,18 @@ export const AuthenticateView: FC<AuthenticateViewProps> = ({ onAuthenticate, lo
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
-    const handleLogin = () => {
-        if (isValidForm()) {
-            onAuthenticate(new AuthUserEmail(email), new AuthUserPassword(password))
-        }
-    }
-
     const isValidForm = (): boolean => {
         try {
             new AuthUserEmail(email) && new AuthUserPassword(password);
             return true
         } catch (_) {
             return false;
+        }
+    }
+
+    const handleLogin = () => {
+        if (isValidForm()) {
+            onAuthenticate(new AuthUserEmail(email), new AuthUserPassword(password))
         }
     }
 

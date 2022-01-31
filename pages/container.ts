@@ -4,6 +4,8 @@ import ApiAuthRepository from '../contexts/auth/infrastructure/api/ApiAuthReposi
 import FixBikHttpClient from '../contexts/shared/infrastructure/http-client/FixBikHttpClient';
 import AuthStore from '../contexts/auth/domain/AuthStore';
 import AuthCookieStore from '../contexts/auth/infrastructure/store/AuthCookieStore';
+import BikeRepository from '../contexts/bike/domain/BikeRepository';
+import ApiBikeRepository from '../contexts/bike/infrastructure/api/ApiBikeRepository';
 
 const { publicRuntimeConfig } = getConfig()
 
@@ -13,4 +15,4 @@ const httpClient = new FixBikHttpClient({
 
 export const authStore: AuthStore = new AuthCookieStore();
 export const authRepository: AuthRepository = new ApiAuthRepository(httpClient);
-// export const bikeRepository: BikeRepository = new ApiBikeRepository(httpClient);
+export const bikeRepository: BikeRepository = new ApiBikeRepository(httpClient);

@@ -5,7 +5,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint --fix",
+    "lint": "next lint -d pages -d contexts -d components --fix",
     "test": "jest",
     "storybook": "start-storybook -p 6006 -s ./public",
     "build-storybook": "build-storybook -s public"

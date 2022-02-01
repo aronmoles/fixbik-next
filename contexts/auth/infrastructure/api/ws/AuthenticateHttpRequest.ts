@@ -26,7 +26,7 @@ export default class AuthenticateHttpRequest extends HttpRequest<RequestData> {
                 password: password.value(),
             },
             {
-                401: 'Error en la autenticación'
+                401: 'Error en la autenticación',
             },
         );
     }

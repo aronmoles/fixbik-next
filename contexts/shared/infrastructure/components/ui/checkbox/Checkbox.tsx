@@ -6,7 +6,7 @@ interface CheckboxProps {
     disabled?: boolean,
 }
 
-export const Checkbox: FC<CheckboxProps> = ({ checked, onChange, disabled}) => {
+export const Checkbox: FC<CheckboxProps> = ({ checked, onChange, disabled }) => {
     return (
         <input
             type={'checkbox'}

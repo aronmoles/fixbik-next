@@ -21,7 +21,7 @@ export const Number = Template.bind({});
 Number.args = {
     ...Text.args,
     type: 'number',
-    placeholder: '⌨️ Input a number'
+    placeholder: '⌨️ Input a number',
 };
 
 export const Disabled = Template.bind({});

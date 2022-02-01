@@ -7,8 +7,6 @@ export function AuthGuard({ children }: { children: JSX.Element }) {
     const { isAuth } = useAuth()
     const router = useRouter()
 
-    console.log('AUTH GUARD', isAuth)
-
     useEffect(() => {
         if (!isAuth) {
             router.replace(Route.AUTHENTICATE)

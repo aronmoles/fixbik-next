@@ -21,7 +21,7 @@ export const AuthenticateDataContainer: FC<AuthenticateDataContainerProps> = ({ 
             .then((authToken) => {
                 login(authToken)
             })
-            .catch((err) => setError(err.message))
+            .catch((exception) => setError(exception.message))
             .finally(() => setLoading(false))
     }
 

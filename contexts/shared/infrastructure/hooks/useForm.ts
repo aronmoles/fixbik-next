@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment,max-lines-per-function */
 import { FormEventHandler, useMemo, useState } from 'react';
 
 type ValidateFunction = (value: any) => string | undefined;
@@ -44,40 +45,41 @@ type Return<FT> = {
     formFieldArray: (key: keyof FT) => FormFieldArray,
 }
 
-export const useForm = <FT>(formDefinition: FormDefinition<FT>, onSubmit: (values: FT) => void): Return<FT> => {
-
-    const buildInitialState = (formDefinition: FormDefinition<FT>): FormState => {
-        const formState: FormState = {} as FormState;
-        Object.keys(formDefinition).forEach((key: string) => {
-            const formFieldDefinition: FormFieldDefinition = formDefinition[key as keyof FT];
-            if (formFieldDefinition.array) {
-                // @ts-ignore
-                formState[key] = formFieldDefinition.initialValue?.map((value: any) => ({
-                    value: value,
-                    touched: false,
-                    valid: false,
-                })) ?? [];
-            } else {
-                // @ts-ignore
-                formState[key] = {
-                    value: formFieldDefinition.initialValue,
-                    touched: false,
-                    valid: false,
-                }
+const buildInitialState = <FT>(formDefinition: FormDefinition<FT>): FormState => {
+    const formState: FormState = {} as FormState;
+    Object.keys(formDefinition).forEach((key: string) => {
+        const formFieldDefinition: FormFieldDefinition = formDefinition[key as keyof FT];
+        if (formFieldDefinition.array) {
+            formState[key] = formFieldDefinition.initialValue?.map((value: any) => ({
+                value,
+                touched: false,
+                valid: false,
+            })) ?? [];
+        } else {
+            formState[key] = {
+                value: formFieldDefinition.initialValue,
+                touched: false,
+                valid: false,
             }
-        });
-        return formState;
-    }
+        }
+    });
+    return formState;
+}
 
+export const useForm = <FT>(formDefinition: FormDefinition<FT>, onSubmit: (values: FT) => void): Return<FT> => {
     const initialState = useMemo(() => buildInitialState(formDefinition), [formDefinition])
     const [formState, setFormState] = useState<FormState>(initialState);
 
-    const buildFormFieldValue = (oldFormFieldState: FormFieldState, newValue: any, validate?: ValidateFunction): FormFieldState => {
+    const buildFormFieldValue = (
+        oldFormFieldState: FormFieldState,
+        newValue: any,
+        validate?: ValidateFunction,
+    ): FormFieldState => {
         const error = validate ? validate(newValue) : undefined;
         return {
             ...oldFormFieldState,
             value: newValue,
-            error: error,
+            error,
             valid: !error,
             touched: true,
         }
@@ -88,7 +90,7 @@ export const useForm = <FT>(formDefinition: FormDefinition<FT>, onSubmit: (value
             const { validate } = formDefinition[key as keyof FT]
             setFormState({
                 ...formState,
-                [key]: buildFormFieldValue(formState[key] as FormFieldState, newValue, validate)
+                [key]: buildFormFieldValue(formState[key] as FormFieldState, newValue, validate),
             });
         }
     }
@@ -102,10 +104,9 @@ export const useForm = <FT>(formDefinition: FormDefinition<FT>, onSubmit: (value
                     if (index === indexMap) {
                         // @ts-ignore
                         return buildFormFieldValue(formState[key][index], newValue, validate)
-                    } else {
-                        return formFieldState;
                     }
-                })
+                    return formFieldState;
+                }),
             })
         }
     }
@@ -124,7 +125,8 @@ export const useForm = <FT>(formDefinition: FormDefinition<FT>, onSubmit: (value
 
     const onRemoveFormFieldArray = (key: string, index: number): () => void => {
         return () => {
-            const formFieldStates = (formState[key] as FormFieldState[]).filter((_, filterIndex) => filterIndex !== index);
+            const formFieldStates = (formState[key] as FormFieldState[])
+                .filter((_, filterIndex) => filterIndex !== index);
             setFormState({
                 ...formState,
                 [key]: formFieldStates,
@@ -137,11 +139,19 @@ export const useForm = <FT>(formDefinition: FormDefinition<FT>, onSubmit: (value
         Object.keys(newState).forEach((key: string) => {
             if (Array.isArray(newState[key])) {
                 newState[key] = (newState[key] as FormFieldState[]).map((formFieldState) => {
-                    return buildFormFieldValue(formFieldState, formFieldState.value, formDefinition[key as keyof FT].validate)
+                    return buildFormFieldValue(
+                        formFieldState,
+                        formFieldState.value,
+                        formDefinition[key as keyof FT].validate,
+                    )
                 })
             } else {
                 const formFieldState = newState[key] as FormFieldState;
-                newState[key] = buildFormFieldValue(formFieldState, formFieldState.value, formDefinition[key as keyof FT].validate)
+                newState[key] = buildFormFieldValue(
+                    formFieldState,
+                    formFieldState.value,
+                    formDefinition[key as keyof FT].validate,
+                )
             }
         })
         setFormState(newState);
@@ -177,9 +187,8 @@ export const useForm = <FT>(formDefinition: FormDefinition<FT>, onSubmit: (value
     const valid = Object.keys(formDefinition).every((key) => {
         if (Array.isArray(formState[key])) {
             return (formState[key] as FormFieldState[]).every((formFieldState) => formFieldState.valid);
-        } else {
-            return (formState[key] as FormFieldState).valid;
         }
+        return (formState[key] as FormFieldState).valid;
     })
 
     const values = { ...formDefinition } as FT;
@@ -207,6 +216,6 @@ export const useForm = <FT>(formDefinition: FormDefinition<FT>, onSubmit: (value
         valid,
         handleSubmit,
         formField,
-        formFieldArray
+        formFieldArray,
     }
 }

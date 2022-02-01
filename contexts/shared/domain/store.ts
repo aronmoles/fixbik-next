@@ -1,7 +1,8 @@
 import { Nullable } from './Nullable';
 
 export interface StoreItemOptions {
-    maxAge?: number, // expires item in seconds
+    // expires item in seconds
+    maxAge?: number,
 }
 
 export default interface Store {

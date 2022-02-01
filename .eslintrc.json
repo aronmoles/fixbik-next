@@ -262,6 +262,8 @@
     "@typescript-eslint/restrict-template-expressions": "off",
     "@typescript-eslint/await-thenable": "off",
     "@typescript-eslint/unbound-method": "off",
-    "@typescript-eslint/no-floating-promises": "off"
+    "@typescript-eslint/no-floating-promises": "off",
+
+    "react-hooks/exhaustive-deps": "off"
   }
 }

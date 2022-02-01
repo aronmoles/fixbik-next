@@ -23,7 +23,7 @@ export default class FetchHttpClient implements HttpClient {
                 const responseJson = await res.json();
                 if (!res.ok) {
                     this.processError(request, res, responseJson)
-                    throw new Error(`Error recuperando información`)
+                    throw new Error('Error recuperando información')
                 }
                 return ({
                     status: res.status,

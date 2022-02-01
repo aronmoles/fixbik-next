@@ -47,7 +47,6 @@ export const AuthProvider: FC<AuthProviderProps> = ({ authStore, children }) => 
     useEffect(() => {
         authStore.retrieveAuthToken()
             .then((authToken: Optional<AuthToken>) => {
-                console.log('AUTH TOKEN', authToken)
                 if (authToken) {
                     setJwt(authToken)
                 }

@@ -14,9 +14,14 @@ export const BikesView: FC<BikesViewProps> = ({ bikes, loading, error }) => {
     return (
         <>
             <h1>Bikes</h1>
+            <Link href={Route.BIKE_ADD}>Add bike</Link>
             <ul>
                 {bikes?.map((bike, index) => (
-                    <li key={index}>{bike.brand.value()} {bike.model.value()} {'=>'} <Link href={Route.BIKE_DETAIL({ id: bike.id })}>Edit</Link></li>
+                    <li key={index}>{bike.brand.value()}
+                        {bike.model.value()} {'=>'}
+                        <Link href={Route.BIKE_DETAIL({ id: bike.id })}>Detail</Link>
+                        <Link href={Route.BIKE_EDIT({ id: bike.id })}>Edit</Link>
+                    </li>
                 ))}
             </ul>
             {error && <p>{error}</p>}

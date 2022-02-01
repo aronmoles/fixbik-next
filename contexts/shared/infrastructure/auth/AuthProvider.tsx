@@ -20,7 +20,7 @@ const AuthContext = React.createContext<Auth>({
     logout: () => Promise.resolve(),
 })
 
-AuthContext.displayName = "AuthContext"
+AuthContext.displayName = 'AuthContext'
 
 // *****************************************************************************************************************************************
 
@@ -28,7 +28,7 @@ export function useAuth() {
     const auth = React.useContext(AuthContext)
 
     if (!auth) {
-        throw new Error("useAuth must be used within AuthProvider")
+        throw new Error('useAuth must be used within AuthProvider')
     }
 
     return auth
@@ -47,6 +47,7 @@ export const AuthProvider: FC<AuthProviderProps> = ({ authStore, children }) => 
     useEffect(() => {
         authStore.retrieveAuthToken()
             .then((authToken: Optional<AuthToken>) => {
+                console.log('AUTH TOKEN', authToken)
                 if (authToken) {
                     setJwt(authToken)
                 }
@@ -58,8 +59,8 @@ export const AuthProvider: FC<AuthProviderProps> = ({ authStore, children }) => 
         authStore.saveAuthToken(jwt)
     }, [jwt])
 
-    const login = async (jwt: AuthToken): Promise<void> => {
-        setJwt(jwt);
+    const login = async (token: AuthToken): Promise<void> => {
+        setJwt(token);
     }
 
     const logout = async (): Promise<void> => {

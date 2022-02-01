@@ -10,6 +10,7 @@ import BikeName from '../../domain/BikeName';
 import BikeBrand from '../../domain/BikeBrand';
 import BikeModel from '../../domain/BikeModel';
 import BikeYear from '../../domain/BikeYear';
+import BikePostHttpRequest from './ws/BikePostHttpRequest';
 
 export default class ApiBikeRepository implements BikeRepository {
     constructor(
@@ -18,8 +19,15 @@ export default class ApiBikeRepository implements BikeRepository {
     }
 
     findAll(authToken: AuthToken): Promise<Bike[]> {
-        return this.httpClient.execute<FixBikHttpResponse<BikeDto[]>>(BikesGetHttpRequest.create(authToken))
+        return this.httpClient
+            .execute<FixBikHttpResponse<BikeDto[]>>(BikesGetHttpRequest.create(authToken))
             .then((response) => response.body.data!.map(this.convertDtoToEntity));
+    }
+
+    create(bike: Bike, authToken: AuthToken): Promise<void> {
+        return this.httpClient
+            .execute<FixBikHttpResponse<void>>(BikePostHttpRequest.create(this.convertEntityToDto(bike), authToken))
+            .then(() => {})
     }
 
     private convertDtoToEntity(dto: BikeDto): Bike {
@@ -30,6 +38,16 @@ export default class ApiBikeRepository implements BikeRepository {
             BikeModel.fromString(dto.model),
             new BikeYear(dto.year),
         );
+    }
+
+    private convertEntityToDto(bike: Bike): BikeDto {
+        return ({
+            id: bike.id.value(),
+            name: bike.name.value(),
+            brand: bike.brand.value(),
+            model: bike.model.value(),
+            year: bike.year.value(),
+        });
     }
 
     /*

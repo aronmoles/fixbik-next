@@ -20,6 +20,7 @@ const dynamicRoute = <T extends Params>(route: string) => {
 export default class Route {
     public static HOME = '/';
     public static AUTHENTICATE = '/auth/authenticate';
+    public static BIKE_ADD = '/bike/add';
     public static BIKE_DETAIL = dynamicRoute<ParamsId>('/bike/:id');
     public static BIKE_EDIT = dynamicRoute<ParamsId>('/bike/:id/edit');
 }

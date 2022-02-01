@@ -5,7 +5,10 @@ export default class BikeName extends StringValueObject {
         return new BikeName(name)
     }
 
-    private constructor(value: string) {
+    constructor(value: string) {
         super(value);
+        if (!value) {
+            throw new Error('Name is required')
+        }
     }
 }

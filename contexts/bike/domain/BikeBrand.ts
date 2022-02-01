@@ -5,7 +5,10 @@ export default class BikeBrand extends StringValueObject {
         return new BikeBrand(name)
     }
 
-    private constructor(value: string) {
+    constructor(value: string) {
         super(value);
+        if (!value) {
+            throw new Error('Model is required')
+        }
     }
 }

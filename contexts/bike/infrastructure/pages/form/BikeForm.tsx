@@ -8,6 +8,7 @@ import BikeModel from '../../../domain/BikeModel';
 import BikeYear from '../../../domain/BikeYear';
 import { Input } from '../../../../shared/infrastructure/components/ui/input/Input';
 import { Button } from '../../../../shared/infrastructure/components/ui/button/Button';
+import ValueObjectValidator from '../../../../shared/domain/value-object/ValueObjectValidator';
 
 interface BikeFormProps {
     bike?: Bike,
@@ -29,19 +30,19 @@ export const BikeForm: FC<BikeFormProps> = ({ bike, onSubmit, button }) => {
     const formDefinition: FormDefinition<BikeFormData> = useMemo(() => ({
         name: {
             initialValue: bike?.name.toString(),
-            validate: (value: string) => (value.length > 0 ? undefined : 'Campo obligatorio'),
+            validate: ValueObjectValidator.validate(BikeName),
         },
         brand: {
             initialValue: bike?.brand.toString(),
-            validate: (value: string) => (value.length > 0 ? undefined : 'Campo obligatorio'),
+            validate: ValueObjectValidator.validate(BikeModel),
         },
         model: {
             initialValue: bike?.model.toString(),
-            validate: (value: string) => (value.length > 0 ? undefined : 'Campo obligatorio'),
+            validate: ValueObjectValidator.validate(BikeBrand),
         },
         year: {
             initialValue: bike?.year.toString(),
-            validate: (value: number) => (!value || value < 1970 || value > 2023 ? 'Error' : undefined),
+            validate: ValueObjectValidator.validate(BikeYear),
         },
     }), [bike])
 
@@ -87,10 +88,8 @@ export const BikeForm: FC<BikeFormProps> = ({ bike, onSubmit, button }) => {
                 type={'number'}
                 value={formField('year').value}
                 onChange={formField('year').onChange}
-                // TODO
-                min={1970}
-                // TODO
-                max={2023}
+                min={BikeYear.MIN_YEAR}
+                max={BikeYear.MAX_YEAR}
             />
             {formField('year').error}
 

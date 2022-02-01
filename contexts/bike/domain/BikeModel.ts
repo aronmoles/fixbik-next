@@ -5,7 +5,10 @@ export default class BikeModel extends StringValueObject {
         return new BikeModel(name)
     }
 
-    private constructor(value: string) {
+    constructor(value: string) {
         super(value);
+        if (!value) {
+            throw new Error('Model is required')
+        }
     }
 }
